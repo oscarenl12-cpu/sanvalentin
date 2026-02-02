@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oscar & Aymar ❤️</title>
+
+<style>
+body{
+    margin:0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(120deg,#ff758c,#ff7eb3);
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+.container{
+    position:relative;
+}
+
+.card{
+    background:white;
+    width:320px;
+    padding:20px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,.3);
+    animation:fadeIn .6s;
+}
+
+.hidden{display:none;}
+
+button{
+    background:#ff2f6d;
+    color:white;
+    border:none;
+    padding:12px 22px;
+    border-radius:25px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{background:#ff0844;}
+
+img{
+    width:100%;
+    border-radius:15px;
+    margin:6px 0;
+}
+
+.timer{
+    font-size:22px;
+    font-weight:bold;
+}
+
+@keyframes fadeIn{
+    from{opacity:0;transform:scale(.7);}
+    to{opacity:1;transform:scale(1);}
+}
+
+/* SOBRE */
+.envelope{
+    width:280px;
+    height:180px;
+    background:#ff4b7d;
+    position:relative;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.envelope:before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:0;
+    height:0;
+    border-left:140px solid transparent;
+    border-right:140px solid transparent;
+    border-top:90px solid #ff7aa2;
+    transform-origin:top;
+    transition:.6s;
+}
+
+.envelope.open:before{
+    transform:rotateX(180deg);
+}
+
+/* CORAZONES */
+.heart{
+    position:fixed;
+    bottom:-20px;
+    font-size:20px;
+    animation:float 6s linear infinite;
+}
+
+@keyframes float{
+    from{transform:translateY(0);opacity:1;}
+    to{transform:translateY(-110vh);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" autoplay loop>
+<source src="mi_music.mp3">
+</audio>
+
+<div class="container">
+
+<!-- CARTA 1 -->
+<div class="card" id="carta1">
+    <h2>💌 Oscar & Aymar <br> 11/08/24</h2>
+    <p>Haz clic en la carta</p>
+    <div class="envelope" onclick="abrirCarta()"></div>
+</div>
+
+<!-- CARTA 2 -->
+<div class="card hidden" id="carta2">
+    <h2>¿Quieres ser mi San Valentín? ❤️</h2>
+    <p>Este 14 de febrero quiero pasarlo contigo mi nena chula y compartir este hermoso momento contigo. DIME QUE SIIIIII!!!.</p>
+    <button onclick="aceptar()">Acepto 💖</button>
+</div>
+
+<!-- CARTA 3 -->
+<div class="card hidden" id="carta3">
+    <h2>Sabía que aceptarías mi nena preciosa 😍</h2>
+
+    <img src="foto2.jpg.jpeg" alt="Foto de Oscar y Aymar">
+
+    <p class="timer" id="contador"></p>
+    <p>Ya falta poco mi amor, ya quiero que llegue este gran día 💕</p>
+</div>
+
+</div>
+
+<script>
+function abrirCarta(){
+    document.querySelector(".envelope").classList.add("open");
+    setTimeout(()=>{
+        carta1.classList.add("hidden");
+        carta2.classList.remove("hidden");
+        document.getElementById("music").play();
+    },600);
+}
+
+function aceptar(){
+    carta2.classList.add("hidden");
+    carta3.classList.remove("hidden");
+}
+
+// CONTADOR
+function actualizar(){
+    const destino = new Date(new Date().getFullYear(),1,14);
+    const ahora = new Date();
+    const diff = destino - ahora;
+
+    const d = Math.floor(diff/(1000*60*60*24));
+    const h = Math.floor(diff/(1000*60*60)%24);
+    const m = Math.floor(diff/(1000*60)%60);
+    const s = Math.floor(diff/1000%60);
+
+    contador.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+}
+setInterval(actualizar,1000);
+actualizar();
+
+// CORAZONES
+setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=3+Math.random()*3+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+},400);
+</script>
+
+</body>
+</html>
